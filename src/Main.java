@@ -215,13 +215,13 @@ public class Main {
                 case 3:
                     Loan l = new Loan();
                     l.setStartDate(new Date());
-                    System.out.println("Introduce el ISBN del libro");
+                    System.out.println("Enter book ISBN ");
                     String ISBN = sc.nextLine();
                     b = (Book) catalogue.books.get(ISBN);
                     if(b != null){
                         l.setBook(b);
                     }
-                    System.out.println("Introduce el DNI del member");
+                    System.out.println("Enter member DNI");
                     String dni = sc.nextLine();
                     m = (Member) catalogue.members.get(dni);
                     if(m !=null){
