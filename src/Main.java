@@ -5,6 +5,8 @@ import models.Catalogue;
 import models.Loan;
 import models.Member;
 import utils.GetPropertyValues;
+
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -211,8 +213,23 @@ public class Main {
                     break;
 
                 case 3:
-
+                    Loan l = new Loan();
+                    l.setStartDate(new Date());
+                    System.out.println("Introduce el ISBN del libro");
+                    String ISBN = sc.nextLine();
+                    b = (Book) catalogue.books.get(ISBN);
+                    if(b != null){
+                        l.setBook(b);
+                    }
+                    System.out.println("Introduce el DNI del member");
+                    String dni = sc.nextLine();
+                    m = (Member) catalogue.members.get(dni);
+                    if(m !=null){
+                        l.setMember(m);
+                    }
+                    catalogue.insert(l);
                     break;
+
                 case 4:
                     run = false;
                     break;

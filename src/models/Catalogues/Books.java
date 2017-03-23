@@ -28,7 +28,6 @@ public class Books implements ICatalogue {
 
     @Override
     public List get() {
-        System.out.println(Book._view_key);
         return db.findAll(Book.class, Book._view_all);
     }
 
