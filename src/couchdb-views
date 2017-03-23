@@ -1,0 +1,36 @@
+// Des de lightcouch no podem crear documents tipus View, així que els creem manualment v.v
+
+_design/library:books()
+function(doc) {
+	if (doc.Type == 'Book')  emit(null, doc)
+}
+
+_design/library:book(ISBN)
+function(doc) {
+	if (doc.Type == 'Book')  emit(doc.ISBN, doc)
+}
+
+_design/library:loans()
+function(doc) {
+	if (doc.Type == 'Loan')  emit(null, doc)
+}
+
+_design/library:loan_by_isbn()
+function(doc) {
+	if (doc.Type == 'Loan')  emit(doc.book.ISBN, doc)
+}
+
+_design/library:loan_by_dni()
+function(doc) {
+	if (doc.Type == 'Loan')  emit(doc.member.dni, doc)
+}
+
+_design/library:members()
+function(doc) {
+	if (doc.Type == 'Member')  emit(null, doc)
+}
+
+_design/library:member(DNI)
+function(doc) {
+	if (doc.Type == 'Member')  emit(doc.dni, doc)
+}

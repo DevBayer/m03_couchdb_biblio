@@ -6,8 +6,12 @@ import com.google.gson.annotations.SerializedName;
  * Created by 23878410v on 09/03/17.
  */
 public class Model {
-    transient String primaryKey = "id";
+    @SerializedName("_id") public String primaryKey = null;
     @SerializedName("_rev") public String rev = null;
+    transient public String key = null;
+    public String Type = null;
+    transient static public String _view_all = null;
+    transient static public String _view_key = null;
 
     public Model() {
 
@@ -19,6 +23,22 @@ public class Model {
 
     public void setPrimaryKey(String primaryKey) {
         this.primaryKey = primaryKey;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getType() {
+        return Type;
+    }
+
+    public void setType(String type) {
+        this.Type = type;
     }
 
     public String getRev() {

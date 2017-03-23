@@ -1,6 +1,5 @@
 package models;
 
-import com.google.gson.annotations.SerializedName;
 import database.Model;
 
 import java.util.Date;
@@ -9,25 +8,26 @@ import java.util.Date;
  * Created by 23878410v on 09/03/17.
  */
 public class Loan extends Model {
-    @SerializedName("_id") String id;
     Book book;
     Member member;
     Date StartDate;
     Boolean delivered;
+    transient static public String _view_by_book = "library/loan_by_isbn";
+    transient static public String _view_by_member = "library/loan_by_dni";
 
     public Loan() {
+        this._view_all = "library/loans";
+        this._view_key = "library/book";
+        this.Type = "Loan";
     }
 
-    @Override
-    public String getPrimaryKey() {
-        return id;
+    public String getKeyBook() {
+        return book.getKey();
     }
 
-    @Override
-    public void setPrimaryKey(String primaryKey) {
-        id = primaryKey;
+    public String getKeyMember() {
+        return member.getKey();
     }
-
 
     public Book getBook() {
         return book;

@@ -10,12 +10,12 @@ import java.util.List;
  */
 public class Database implements OBJConnector {
     @Override
-    public List findAll(Class cls) {
+    public List findAll(Class cls, String view) {
         return null;
     }
 
     @Override
-    public Object findById(Object id) {
+    public List findById(Class cls, String view, String key) {
         return null;
     }
 
@@ -32,5 +32,10 @@ public class Database implements OBJConnector {
     @Override
     public boolean delete(Object obj) {
         return false;
+    }
+
+    @Override
+    public int count(Object obj) {
+        return 0;
     }
 }

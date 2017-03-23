@@ -1,39 +1,48 @@
 package models.Catalogues;
-import com.google.gson.annotations.SerializedName;
 import database.Database;
 import database.Model;
 import interfaces.ICatalogue;
 import models.Book;
-import org.lightcouch.NoDocumentException;
+import models.Loan;
+import models.Member;
 
 import java.util.*;
 
 /**
  * Created by 23878410v on 09/03/17.
  */
-public class Books extends Model implements ICatalogue {
-    @SerializedName("_id") public String id;
+public class Books implements ICatalogue {
     public List<Book> books = new ArrayList<>();
+    private String view = "library/books";
+    private Database db;
 
     public Books(Database db) {
-        id = "books";
-        try {
-            Books d = (Books) db.findById(this);
-            books = d.books;
-            rev = d.getRev();
-        }catch(NoDocumentException e){
-            db.insert(this);
-        }
+        this.db = db;
+        //books = db.findAll(Book.class, view);
     }
-
-    @Override
-    public String getPrimaryKey() {
-        return "books";
-    }
-
 
     @Override
     public void add(Object obj) {
         books.add((Book) obj);
+    }
+
+    @Override
+    public List get() {
+        System.out.println(Book._view_key);
+        return db.findAll(Book.class, Book._view_all);
+    }
+
+    @Override
+    public Model get(String key) {
+        List<Book> d = db.findById(Book.class, Book._view_key, key);
+        if(d.isEmpty()){
+            return null;
+        }else{
+            return d.get(0);
+        }
+    }
+
+    public List<Loan> loans(Book b) {
+        return db.findById(Loan.class, Loan._view_by_book, b.getISBN());
     }
 }

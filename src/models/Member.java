@@ -1,36 +1,33 @@
 package models;
 
-import com.google.gson.annotations.SerializedName;
 import database.Model;
 
 /**
  * Created by 23878410v on 09/03/17.
  */
 public class Member extends Model {
-    @SerializedName("_id") String dni;
+    String dni;
     String name;
     String surname;
     String address;
     String telephone;
 
     public Member() {
+        this._view_all = "library/members";
+        this._view_key = "library/member";
+        this.Type = "Member";
     }
 
     @Override
-    public String getPrimaryKey() {
+    public String getKey() {
         return dni;
     }
 
-    @Override
-    public void setPrimaryKey(String primaryKey) {
-        dni = primaryKey;
-    }
-
-    public String getDni() {
+    public String getDNI() {
         return dni;
     }
 
-    public void setDni(String dni) {
+    public void setDNI(String dni) {
         this.dni = dni;
     }
 

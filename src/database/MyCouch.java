@@ -1,7 +1,6 @@
 package database;
 
-import org.lightcouch.CouchDbClient;
-import org.lightcouch.Response;
+import org.lightcouch.*;
 
 import java.util.List;
 
@@ -16,13 +15,13 @@ public class MyCouch extends Database {
     }
 
     @Override
-    public List findAll(Class cls) {
-        return connection.view("_all_docs").includeDocs(true).query(cls);
+    public List findAll(Class cls, String view) {
+        return connection.view(view).includeDocs(true).query(cls);
     }
 
     @Override
-    public Object findById(Object object) {
-        return connection.find(object.getClass(), ((Model) object).getPrimaryKey());
+    public List findById(Class cls, String view, String key) {
+        return connection.view(view).key(key).includeDocs(true).query(cls);
     }
 
     @Override
@@ -55,5 +54,11 @@ public class MyCouch extends Database {
         }else{
             return false;
         }
+    }
+
+    @Override
+    public int count(Object object) {
+        List<Model> list =connection.view(((Model) object)._view_key).key(((Model) object).getKey()).query(Model.class);
+        return list.size();
     }
 }

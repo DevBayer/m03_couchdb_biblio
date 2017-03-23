@@ -1,30 +1,31 @@
 package models;
 
-import com.google.gson.annotations.SerializedName;
 import database.Model;
+
+import java.util.List;
 
 /**
  * Created by 23878410v on 09/03/17.
  */
 public class Book extends Model {
-    @SerializedName("_id") String ISBN;
+    transient static public String _view_all = "library/books";
+    transient static public String _view_key = "library/book";
+    String ISBN;
     String Author;
     String Editorial;
     String Title;
     String Category;
     int EditionYear;
 
-    @Override
-    public String getPrimaryKey() {
-        return ISBN;
-    }
-
-    @Override
-    public void setPrimaryKey(String primaryKey) {
-        ISBN = primaryKey;
-    }
-
     public Book() {
+        this._view_all = "library/books";
+        this._view_key = "library/book";
+        this.Type = "Book";
+    }
+
+    @Override
+    public String getKey() {
+        return ISBN;
     }
 
     public String getISBN() {
