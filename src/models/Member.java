@@ -6,6 +6,8 @@ import database.Model;
  * Created by 23878410v on 09/03/17.
  */
 public class Member extends Model {
+    transient static public String _view_all = "library/members";
+    transient static public String _view_key = "library/member";
     String dni;
     String name;
     String surname;

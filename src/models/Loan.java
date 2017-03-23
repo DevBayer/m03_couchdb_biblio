@@ -12,6 +12,8 @@ public class Loan extends Model {
     Member member;
     Date StartDate;
     Boolean delivered;
+    transient static public String _view_all = "library/loans";
+    transient static public String _view_key = "library/loan";
     transient static public String _view_by_book = "library/loan_by_isbn";
     transient static public String _view_by_member = "library/loan_by_dni";
 
