@@ -6,6 +6,7 @@ import models.Loan;
 import models.Member;
 import utils.GetPropertyValues;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -204,12 +205,21 @@ public class Main {
                     System.out.print("- Year: ");
                     b.setEditionYear(Integer.parseInt(sc.nextLine()));
                     catalogue.insert(b);
+                    System.out.println("New book added");
                     break;
 
                 case 2:
                     Member m = new Member();
-
+                    System.out.print("- Dni: ");
+                    m.setDNI(sc.nextLine());
+                    System.out.print("- Surname: ");
+                    m.setSurname(sc.nextLine());
+                    System.out.print("- Address: ");
+                    m.setAddress(sc.nextLine());
+                    System.out.print("- Telephone: ");
+                    m.setTelephone(sc.nextLine());
                     catalogue.insert(m);
+                    System.out.println("New member added");
                     break;
 
                 case 3:
@@ -239,6 +249,95 @@ public class Main {
     }
 
     private static void menuRemove() {
+        String strEntry;
+        Book b = new Book();
+        Member m = new Member();
+        List<Loan> loans = new ArrayList<>();
+        boolean run = true;
+        while(run) {
+            System.out.println("          ##### 3. Remove ####");
+            System.out.println("          # 1. Book       #");
+            System.out.println("          # 2. Member     #");
+            System.out.println("          # 3. Loan       #");
+            System.out.println("          # 4. Return     #");
+            System.out.print("          # Option:   ");
+            int option = sc.nextInt();
+            sc.nextLine(); // clear Scanner..
+            switch (option) {
+                case 1:
+                    System.out.print("Find Book by ISBN: ");
+                    strEntry = sc.nextLine();
+                    b = (Book) catalogue.books.get(strEntry);
+                    if(b != null){
+                        catalogue.delete(b);
+                    }else{
+                        System.out.println("Not found");
+                    }
+                    break;
+                case 2:
+                    strEntry = sc.nextLine();
+                    System.out.print("Find Member by DNI: ");
+                    m = (Member) catalogue.members.get(strEntry);
+                    if(b != null){
+                        catalogue.delete(m);
+                    }else{
+                        System.out.println("Not found");
+                    }
+                    break;
+                case 3 :
+                    Loan loan = new Loan();
+                    System.out.println("## Find Loan by.. ##");
+                    System.out.println("# 1. Book ISBN     #");
+                    System.out.println("# 2. Member DNI    #");
+                    System.out.print("Option: ");
+                    int optionb = sc.nextInt();
+                    sc.nextLine(); // reset Scanner
+                    switch(optionb){
+                        case 1:
+                            System.out.print("ISBN: ");
+                            strEntry = sc.nextLine();
+                            b = (Book) catalogue.books.get(strEntry);
+                            if(b != null){
+                                loans = catalogue.books.loans(b);
+                                for (int i = 0; i < loans.size(); i++) {
+                                    loan = loans.get(i);
+                                    System.out.println("["+i+"]" + loan.getPrimaryKey() + " " + loan.getStartDate()+"-"+ loan.getDelivered());
+                                    System.out.println("Member: "+ loan.getMember().getDNI());
+                                    System.out.println("Book: "+ loan.getBook().getISBN());
+                                }
+                            }else{
+                                System.out.println("ISBN not found");
+                            }
+                            break;
+
+                        case 2:
+                            System.out.print("DNI: ");
+                            strEntry = sc.nextLine();
+                            m = (Member) catalogue.members.get(strEntry);
+                            if(m != null){
+                                loans = catalogue.members.loans(m);
+                                for (int i = 0; i < loans.size(); i++) {
+                                    loan = loans.get(i);
+                                    System.out.println("["+i+"]" + loan.getPrimaryKey() + " " + loan.getStartDate()+"-"+ loan.getDelivered());
+                                    System.out.println("Member: "+ loan.getMember().getDNI());
+                                    System.out.println("Book: "+ loan.getBook().getISBN());
+                                }
+                            }else{
+                                System.out.println("DNI not found");
+                            }
+                            break;
+                    }
+                    System.out.println("Enter number");
+                        int idborrar = Integer.parseInt(sc.nextLine());
+                        if(idborrar >= 0 && idborrar <= loans.size()) {
+                            catalogue.delete(loans.get(idborrar));
+                        }else{
+                        System.out.println("ISBN not found");
+                        }
+
+                    break;
+            }
+        }
     }
 
     private static void menuFind(){

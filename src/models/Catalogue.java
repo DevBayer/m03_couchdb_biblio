@@ -7,8 +7,6 @@ import models.Catalogues.Loans;
 import models.Catalogues.Members;
 import org.lightcouch.DocumentConflictException;
 
-import java.util.List;
-
 
 /**
  * Created by 23878410v on 09/03/17.
@@ -48,5 +46,10 @@ public class Catalogue {
         }
         return null;
     }
+
+    public void delete(Object obj){
+        db.delete(obj);
+    }
+
 
 }
